@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Foundations Quiz</title>
+  <meta name="description" content="A mobile-first AI Foundations quiz with 30 scenario-based reasoning questions across three levels.">
+  <meta property="og:title" content="AI Foundations Quiz">
+  <meta property="og:description" content="Practice AI Foundations through 30 scenario-based why and how questions across Beginner, Hard, and Extremely Hard levels.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221200%22%20height%3D%22630%22%20viewBox%3D%220%200%201200%20630%22%3E%0A%3Crect%20width%3D%221200%22%20height%3D%22630%22%20fill%3D%22%230b1020%22/%3E%0A%3Ccircle%20cx%3D%22970%22%20cy%3D%22120%22%20r%3D%22220%22%20fill%3D%22%233466ff%22%20opacity%3D%220.35%22/%3E%0A%3Ccircle%20cx%3D%22240%22%20cy%3D%22520%22%20r%3D%22220%22%20fill%3D%22%231fd3a6%22%20opacity%3D%220.28%22/%3E%0A%3Crect%20x%3D%2292%22%20y%3D%2285%22%20width%3D%221016%22%20height%3D%22460%22%20rx%3D%2242%22%20fill%3D%22%23121a33%22%20stroke%3D%22%23ffffff%22%20stroke-opacity%3D%220.18%22%20stroke-width%3D%222%22/%3E%0A%3Ctext%20x%3D%22120%22%20y%3D%22190%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2252%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%3EAI%20Foundations%20Quiz%3C/text%3E%0A%3Ctext%20x%3D%22120%22%20y%3D%22260%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2230%22%20fill%3D%22%23d8e2ff%22%3E30%20scenario%20based%20reasoning%20questions%3C/text%3E%0A%3Ctext%20x%3D%22120%22%20y%3D%22315%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2230%22%20fill%3D%22%23d8e2ff%22%3EBeginner%20%E2%80%A2%20Hard%20%E2%80%A2%20Extremely%20Hard%3C/text%3E%0A%3Cg%20transform%3D%22translate%28120%20390%29%22%3E%0A%3Crect%20width%3D%22235%22%20height%3D%2270%22%20rx%3D%2222%22%20fill%3D%22%233466ff%22/%3E%0A%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2225%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%3E20%20min%20per%20level%3C/text%3E%0A%3C/g%3E%0A%3Cg%20transform%3D%22translate%28380%20390%29%22%3E%0A%3Crect%20width%3D%22245%22%20height%3D%2270%22%20rx%3D%2222%22%20fill%3D%22%231fd3a6%22/%3E%0A%3Ctext%20x%3D%2230%22%20y%3D%2245%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2225%22%20font-weight%3D%22700%22%20fill%3D%22%2307111f%22%3EMobile%20first%3C/text%3E%0A%3C/g%3E%0A%3C/svg%3E">
+  <meta property="og:image:alt" content="AI Foundations Quiz preview card">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b1020">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(52, 102, 255, 0.28), transparent 34%),
+        radial-gradient(circle at 88% 2%, rgba(31, 211, 166, 0.24), transparent 28%),
+        linear-gradient(145deg, #07111f 0%, #0b1020 46%, #101a2d 100%);
+      color: #f7f9ff;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .screen {
+      display: none;
+      animation: rise 0.32s ease;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero,
+    .panel,
+    .question-card,
+    .result-card {
+      background: rgba(13, 23, 45, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+    }
+
+    .hero {
+      padding: 28px 20px;
+      margin-top: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero:after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -70px;
+      top: -80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(52, 102, 255, 0.8), rgba(31, 211, 166, 0.55));
+      filter: blur(2px);
+      opacity: 0.72;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #b9c7ff;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(34px, 10vw, 72px);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      margin: 20px 0 14px;
+    }
+
+    .lead {
+      position: relative;
+      z-index: 1;
+      color: #d6def7;
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0 0 22px;
+      max-width: 720px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 22px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: #b8c4e5;
+      font-size: 13px;
+    }
+
+    .primary-btn,
+    .ghost-btn,
+    .option-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 18px;
+      transition: transform 0.16s ease, background 0.16s ease, border 0.16s ease, opacity 0.16s ease;
+      min-height: 48px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      padding: 15px 18px;
+      color: #07111f;
+      background: linear-gradient(135deg, #8df8d2, #6ca0ff);
+      font-weight: 800;
+      box-shadow: 0 16px 38px rgba(67, 124, 255, 0.24);
+    }
+
+    .ghost-btn {
+      width: 100%;
+      padding: 14px 18px;
+      color: #f7f9ff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-weight: 800;
+    }
+
+    .primary-btn:hover,
+    .ghost-btn:hover,
+    .option-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .primary-btn:disabled,
+    .ghost-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.42;
+      transform: none;
+    }
+
+    .level-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .level-card {
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    .level-card.locked {
+      opacity: 0.55;
+    }
+
+    .level-card h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+
+    .level-card p {
+      margin: 0;
+      color: #b8c4e5;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+    }
+
+    .pill {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #dbe4ff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .panel {
+      padding: 20px;
+      margin-top: 14px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 12px 0 10px;
+      background: linear-gradient(180deg, #07111f 0%, rgba(7, 17, 31, 0.86) 72%, transparent 100%);
+    }
+
+    .topbar-inner {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 22px;
+      background: rgba(13, 23, 45, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .quiz-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      color: #b8c4e5;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .timer {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 92px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(31, 211, 166, 0.14);
+      color: #aaffdf;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timer.danger {
+      background: rgba(255, 91, 122, 0.16);
+      color: #ff9eb2;
+    }
+
+    .progress-shell {
+      height: 10px;
+      width: 100%;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #8df8d2, #6ca0ff);
+      transition: width 0.22s ease;
+    }
+
+    .question-card {
+      padding: 20px;
+      margin-top: 10px;
+    }
+
+    .question-number {
+      color: #90a6ff;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      line-height: 1.32;
+      letter-spacing: -0.02em;
+      font-weight: 850;
+      margin: 0 0 18px;
+    }
+
+    .options {
+      display: grid;
+      gap: 11px;
+    }
+
+    .option-btn {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      padding: 13px;
+      color: #f7f9ff;
+      background: rgba(255, 255, 255, 0.075);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .option-btn.selected {
+      background: rgba(108, 160, 255, 0.22);
+      border-color: rgba(141, 248, 210, 0.65);
+      box-shadow: 0 0 0 3px rgba(141, 248, 210, 0.08);
+    }
+
+    .letter {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      font-weight: 900;
+      color: #cfe0ff;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .helper {
+      color: #aebbe0;
+      font-size: 13px;
+      text-align: center;
+      margin: 2px 0 0;
+      min-height: 20px;
+    }
+
+    .level-done h2,
+    .results h2 {
+      font-size: clamp(30px, 8vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin: 10px 0 10px;
+    }
+
+    .level-done p,
+    .results p {
+      color: #c8d4f3;
+      line-height: 1.65;
+    }
+
+    .score-box {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .score-main {
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(141, 248, 210, 0.16), rgba(108, 160, 255, 0.16));
+      border: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    .score-main strong {
+      display: block;
+      font-size: 44px;
+      letter-spacing: -0.05em;
+    }
+
+    .score-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+    }
+
+    .mini-score {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mini-score strong {
+      display: block;
+      font-size: 22px;
+    }
+
+    .mini-score span {
+      color: #aebbe0;
+      font-size: 13px;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    details {
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 15px;
+      font-weight: 850;
+      line-height: 1.4;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .review-body {
+      padding: 0 15px 15px;
+      color: #d6def7;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 8px;
+      border-radius: 999px;
+      margin-right: 6px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.09);
+      color: #dbe4ff;
+    }
+
+    .tag.good {
+      color: #aaffdf;
+      background: rgba(31, 211, 166, 0.14);
+    }
+
+    .tag.bad {
+      color: #ffb0c0;
+      background: rgba(255, 91, 122, 0.14);
+    }
+
+    .answer-line {
+      margin: 8px 0;
+    }
+
+    .muted {
+      color: #aebbe0;
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    @media (min-width: 680px) {
+      .app {
+        padding: 28px;
+      }
+
+      .hero {
+        padding: 44px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .level-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .actions {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+
+      .primary-btn,
+      .ghost-btn {
+        width: auto;
+      }
+
+      .question-card {
+        padding: 32px;
+      }
+
+      .question-text {
+        font-size: 30px;
+      }
+
+      .score-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section id="start-screen" class="screen active">
+      <div class="hero">
+        <div class="eyebrow">AI Learner Practice Lab</div>
+        <h1>AI Foundations Quiz</h1>
+        <p class="lead">Practice AI Foundations through scenario-based reasoning questions. Each level has its own 20-minute timer. You must answer each question before moving forward, and answers are reviewed only at the end.</p>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>30</strong>
+            <span>Total questions</span>
+          </div>
+          <div class="stat">
+            <strong>3</strong>
+            <span>Sequential levels</span>
+          </div>
+          <div class="stat">
+            <strong>20:00</strong>
+            <span>Timer per level</span>
+          </div>
+        </div>
+
+        <button id="begin-btn" class="primary-btn">Start Beginner Level</button>
+      </div>
+
+      <div class="level-grid" id="level-grid"></div>
+    </section>
+
+    <section id="quiz-screen" class="screen">
+      <div class="topbar">
+        <div class="topbar-inner">
+          <div class="quiz-meta">
+            <span id="level-label">Beginner</span>
+            <span class="timer" id="timer">20:00</span>
+          </div>
+          <div class="progress-shell" aria-hidden="true">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <article class="question-card">
+        <div class="question-number" id="question-number">Question 1 of 10</div>
+        <h2 class="question-text" id="question-text"></h2>
+        <div class="options" id="options"></div>
+        <div class="actions">
+          <button id="next-btn" class="primary-btn" disabled>Next Question</button>
+          <p id="helper" class="helper">Choose one option to continue.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="level-done-screen" class="screen">
+      <div class="panel level-done">
+        <div class="eyebrow" id="done-eyebrow">Level submitted</div>
+        <h2 id="done-title">Level complete</h2>
+        <p id="done-copy">Your answers are saved. The next level is now unlocked. Correct answers will be shown after all three levels are complete.</p>
+        <button id="continue-btn" class="primary-btn">Continue</button>
+      </div>
+    </section>
+
+    <section id="results-screen" class="screen">
+      <div class="panel results">
+        <div class="eyebrow">Complete evaluation</div>
+        <h2>Your final score</h2>
+        <div class="score-box">
+          <div class="score-main">
+            <span class="muted">Overall result</span>
+            <strong id="overall-score">0/30</strong>
+            <span id="overall-percent" class="muted">0%</span>
+          </div>
+          <div class="score-grid" id="score-grid"></div>
+        </div>
+        <p id="result-message"></p>
+        <button id="restart-btn" class="ghost-btn">Restart full quiz</button>
+      </div>
+
+      <div class="review-list" id="review-list"></div>
+    </section>
+  </main>
+
+  <script>
+    const QUESTIONS = [{"level": "Beginner", "q": "How should a new learner begin the course when their only device is a phone and they want a safe first step?", "options": ["Install developer tools before reading any lesson", "Start inside a browser tab and use a chat tool to practice small tasks", "Wait until they can access a powerful desktop computer", "Skip practice and only read the lesson pages"], "answer": 1, "explanation": "The foundation path is designed to start inside a normal browser. The safest early move is to practice in a chat tool before graduating to tools that touch local files."}, {"level": "Beginner", "q": "Why does a short prompt like “help me choose a laptop” often produce a weak answer for a student?", "options": ["The model needs a paid account for shopping advice", "The prompt gives no budget, use case, constraints, or comparison material", "The model can only answer questions about programming", "The learner used natural language instead of code"], "answer": 1, "explanation": "A vague prompt forces guessing. Better answers come from a clear brief that includes context, constraints, files, and the exact decision needed."}, {"level": "Beginner", "q": "How can a learner make an instruction easier for an AI tool to follow when several rules matter?", "options": ["Put every rule in one long paragraph", "Use headings and bullets so constraints are separated from preferences", "Use only capital letters for the most important words", "Ask the same instruction many times without changing it"], "answer": 1, "explanation": "Structured Markdown helps separate required instructions from nice-to-have details, which reduces ambiguity."}, {"level": "Beginner", "q": "Why should a learner distrust a confident answer about a private class discussion that was never provided in the chat?", "options": ["Private details are not visible unless the learner supplies them", "The model always refuses school-related questions", "Confidence proves the answer is based on hidden files", "The answer must be correct if it sounds detailed"], "answer": 0, "explanation": "The model only has the current context and accessible sources. Private decisions have to be supplied before they can be analyzed."}, {"level": "Beginner", "q": "How should a learner request a long study guide that classmates will read on their phones?", "options": ["Ask for one long plain-text paragraph", "Ask for a mobile-friendly HTML page with sections, cards, and a readable layout", "Ask for raw code only", "Ask for a spreadsheet even though the content is mostly reading material"], "answer": 1, "explanation": "HTML is better for long human-facing reading because it can be structured, visual, and easier to scan on a phone."}, {"level": "Beginner", "q": "Why does spelling a word letter by letter help when a model miscounts letters?", "options": ["It forces the model to break the word into smaller visible pieces", "It changes the language of the answer", "It makes the internet search faster", "It turns the prompt into a spreadsheet problem"], "answer": 0, "explanation": "Models handle text as tokens, not neat individual letters. Breaking a word apart can make the counting task easier to verify."}, {"level": "Beginner", "q": "How should a learner ask for totals from a small expense table when accuracy matters?", "options": ["Ask for a rough guess from the pasted numbers", "Ask the AI to write and run code, then show the computed totals", "Ask for a motivational summary of spending habits", "Ask for the nicest looking answer"], "answer": 1, "explanation": "For arithmetic and tables, computation is safer than a glance-based summary. Asking for code execution and proof reduces silent errors."}, {"level": "Beginner", "q": "Why would a repeated report-writing task be a good fit for a Skill?", "options": ["A Skill stores repeatable instructions for a specific task", "A Skill gives automatic access to every private app", "A Skill removes the need to check results", "A Skill turns every answer into a video"], "answer": 0, "explanation": "A Skill is useful when the same process, style, or checklist should be followed again and again."}, {"level": "Beginner", "q": "How should a learner think about a Connector before linking it to email or files?", "options": ["It is just a visual theme for the chat window", "It is access to real apps and data, so permissions should be scoped carefully", "It is a replacement for clear instructions", "It guarantees every action is safe"], "answer": 1, "explanation": "A Connector gives access to real tools or data. That power needs permission awareness and human review."}, {"level": "Beginner", "q": "Why does a final answer from an AI tool still need human checking before use?", "options": ["The model has no built-in truth organ that proves every claim", "The model can only produce jokes", "The browser removes all reasoning from the answer", "Checking is only needed for images"], "answer": 0, "explanation": "Fluent answers can still be wrong. The learner remains responsible for checking facts, numbers, and safety."}, {"level": "Hard", "q": "How should a learner handle a prompt about a scholarship rule that changed this week?", "options": ["Use memory only because recent rules are always famous", "Ask for current sources and require the answer to separate confirmed facts from uncertainty", "Ask for a creative guess to save time", "Avoid dates so the answer feels timeless"], "answer": 1, "explanation": "Recent rules require current sourcing. The answer should make freshness, dates, and uncertainty visible."}, {"level": "Hard", "q": "Why should a learner ask for an objective rubric when testing a business idea they personally love?", "options": ["A rubric reduces praise-seeking and forces the model to judge against criteria", "A rubric makes the answer shorter every time", "A rubric prevents the learner from uploading context", "A rubric turns the task into HTML automatically"], "answer": 0, "explanation": "A liked idea can invite agreement. A rubric forces structured evaluation and makes criticism easier to produce."}, {"level": "Hard", "q": "How should a learner manage a chat that contains an old project brief and a newer corrected brief?", "options": ["Trust the model to guess the newer one", "State that the newer brief overrides the old one and list the current constraints clearly", "Delete all constraints from the prompt", "Ask for a longer answer to cover both versions equally"], "answer": 1, "explanation": "Context can conflict. The safer prompt explicitly marks the current brief as authoritative and removes ambiguity."}, {"level": "Hard", "q": "How should a learner force real computation when asking for fastest-growing products from a spreadsheet?", "options": ["Ask the AI to describe the sheet from a glance", "Ask it to write and run code, report row count and columns first, then compute growth", "Ask for a prettier table only", "Ask it to avoid mentioning method"], "answer": 1, "explanation": "Row count and columns prove the file was read. Code execution proves the numbers came from computation, not a confident summary."}, {"level": "Hard", "q": "How should a team choose the output format for a board update that people will read and discuss later?", "options": ["Pick the format based on the reader’s next action, such as reading, filing, editing, or presenting", "Always use Markdown because it is easiest to type", "Always use raw HTML because it looks technical", "Use plain chat text even for long formal material"], "answer": 0, "explanation": "The best format depends on the audience and use. Human reading, editing, filing, and presenting can call for different containers."}, {"level": "Hard", "q": "How should a learner turn messy notes for a small café website into a better AI request?", "options": ["Ask for the final page instantly and accept the first version", "Convert the notes into a clear Markdown spec with purpose, content, constraints, and exclusions", "Remove all business details so the model can be creative", "Ask for only colors and ignore user actions"], "answer": 1, "explanation": "A spec improves the result because it clarifies intent before generating a page or tool."}, {"level": "Hard", "q": "Why would a client reporting workflow need both a Skill and a Connector?", "options": ["The Skill gives repeatable reporting behavior, while the Connector gives access to the actual files or apps", "The Skill replaces the Connector in every case", "The Connector writes the style guide without instruction", "Using both removes the need for review"], "answer": 0, "explanation": "Skills define how the task should be done. Connectors provide access to where the data lives."}, {"level": "Hard", "q": "How should a learner evaluate a community Skill before enabling it for client work?", "options": ["Enable it first, then read it only after results look strange", "Inspect its instructions and scripts, and flag anything involving credentials, external servers, or data leakage", "Judge it only by the title", "Assume every free Skill is safe"], "answer": 1, "explanation": "A Skill can contain instructions or scripts. Reading it before use is the safety habit."}, {"level": "Hard", "q": "How should a learner know it may be time to move beyond browser-only work?", "options": ["They feel bored by typing prompts", "They repeatedly upload the same local files and need an agent that can work with them directly", "They want fewer checks on AI output", "They have finished one easy prompt"], "answer": 1, "explanation": "Browser work is the starting point. Repeated file handling can signal the need for a desktop or local agent workflow."}, {"level": "Hard", "q": "Why can an AI tool work with photos, audio, PDFs, and text in one workflow?", "options": ["Modern tools can convert different input types into representations the model can process together", "The model ignores non-text files and guesses from filenames", "Images are always safer than documents", "Audio files automatically become private training data"], "answer": 0, "explanation": "Multimodal tools can process several input types in the same context, but the output still needs checking."}, {"level": "Extremely Hard", "q": "How should a learner prompt for a local water-quality briefing that needs recent evidence, resident questions, and source quality control?", "options": ["Ask for a quick answer from memory", "Request a structured research report, define the time window, name authoritative source types, and require cited claims", "Ask for social media opinions first", "Tell the model to use the first search result only"], "answer": 1, "explanation": "A multi-part, current, high-stakes briefing needs deeper research behavior, strong source filters, dates, and traceable claims."}, {"level": "Extremely Hard", "q": "How can a learner reduce risk when a search-enabled answer may have summarized a source too loosely?", "options": ["Ask for exact supporting quotes for key claims and compare them with the summary", "Ask the model to sound more confident", "Remove citations to make the answer cleaner", "Use more adjectives in the prompt"], "answer": 0, "explanation": "Search layers may condense sources. Exact supporting lines make it easier to catch summary drift."}, {"level": "Extremely Hard", "q": "How should a learner brief AI when old brand rules and new brand rules are both inside the same chat?", "options": ["Let the model blend both because more context is always better", "Declare the new rules authoritative, list them under hard constraints, and tell the model to ignore replaced rules", "Ask for the answer without style guidance", "Hide the conflict and judge only the final tone"], "answer": 1, "explanation": "More context is not always better. Conflicting context must be ranked so the model follows the current source."}, {"level": "Extremely Hard", "q": "Why should a learner reject a spreadsheet analysis that gives exact percentages but shows no method, row count, columns, or code run?", "options": ["Exact-looking numbers can still be estimates if computation was not proven", "Percentages are never useful in analysis", "The answer is wrong only if it is short", "Spreadsheets cannot be analyzed inside chat tools"], "answer": 0, "explanation": "Precision in the final wording is not proof. Method evidence and basic file checks are needed before trusting numerical work."}, {"level": "Extremely Hard", "q": "How should a team reduce risk before using a new Skill together with a mail Connector?", "options": ["Give the Skill full access so it can prove usefulness faster", "Read the Skill, limit connector scope, require review before sending, and watch for instructions that leak data", "Trust the Skill if the file name looks professional", "Disable all human review after the first successful draft"], "answer": 1, "explanation": "Combining instructions with real app access is powerful. Safe use means inspecting instructions, limiting permissions, and keeping human approval."}, {"level": "Extremely Hard", "q": "Why is a dependable digital worker more than a single model plus one prompt?", "options": ["Reliable work needs specifications, domain knowledge, architecture, and human oversight around the model", "A prompt is always enough for every repeatable business process", "Models become dependable only when no person reviews them", "Digital workers should avoid structured workflows"], "answer": 0, "explanation": "Operational reliability comes from the system around the model, including explicit specs, domain expertise, engineering structure, and oversight."}, {"level": "Extremely Hard", "q": "How should a learner improve a high-stakes answer that cited forums before official sources?", "options": ["Ask for a rewrite using named authoritative sources and excluding forums, blogs, and unsupported claims", "Keep the answer because forums are always more current", "Remove all source requirements", "Ask for shorter citations only"], "answer": 0, "explanation": "For high-stakes work, source quality is a knob. The prompt should name stronger sources and exclude weak ones."}, {"level": "Extremely Hard", "q": "How should an interactive HTML tool fit into a longer AI workflow after it collects a user choice?", "options": ["It should stop after the visual interaction because the workflow is complete", "It should produce clean text that can be copied back into the next AI prompt", "It should hide the result to prevent bias", "It should require a login system before every use"], "answer": 1, "explanation": "An HTML tool can be an instrument inside a workflow. Its output can become clean context for the next instruction."}, {"level": "Extremely Hard", "q": "Why should a confident answer about an obscure local tradition be treated carefully?", "options": ["Sparse training data can lead the model to blend similar patterns into a plausible but wrong answer", "Local traditions are never written about anywhere", "The model becomes less fluent on rare topics", "Confidence is proof that the model found a hidden archive"], "answer": 0, "explanation": "Rare or thinly documented topics create a reliability problem. Fluency can hide weak grounding."}, {"level": "Extremely Hard", "q": "How should project constraints like no login and no payments be encoded for a quiz builder?", "options": ["Place them under hard constraints so the generated file excludes those features", "Mention them casually at the end and hope they are remembered", "Ask the model to add extra features for creativity", "Hide them until after the build is complete"], "answer": 0, "explanation": "Out-of-scope items should be explicit hard constraints. That keeps the generated product aligned with the brief."}];
+    const LEVELS = ["Beginner", "Hard", "Extremely Hard"];
+    const TIME_PER_LEVEL = 20 * 60;
+    const letters = ["A", "B", "C", "D"];
+
+    const state = {
+      levelIndex: 0,
+      questionIndex: 0,
+      selected: null,
+      answers: Array(QUESTIONS.length).fill(null),
+      completedLevels: [],
+      levelTimes: {},
+      timeLeft: TIME_PER_LEVEL,
+      timerId: null
+    };
+
+    const screens = {
+      start: document.getElementById("start-screen"),
+      quiz: document.getElementById("quiz-screen"),
+      done: document.getElementById("level-done-screen"),
+      results: document.getElementById("results-screen")
+    };
+
+    const beginBtn = document.getElementById("begin-btn");
+    const levelGrid = document.getElementById("level-grid");
+    const levelLabel = document.getElementById("level-label");
+    const timerEl = document.getElementById("timer");
+    const progressBar = document.getElementById("progress-bar");
+    const questionNumber = document.getElementById("question-number");
+    const questionText = document.getElementById("question-text");
+    const optionsEl = document.getElementById("options");
+    const nextBtn = document.getElementById("next-btn");
+    const helper = document.getElementById("helper");
+    const continueBtn = document.getElementById("continue-btn");
+    const doneTitle = document.getElementById("done-title");
+    const doneCopy = document.getElementById("done-copy");
+    const doneEyebrow = document.getElementById("done-eyebrow");
+    const scoreGrid = document.getElementById("score-grid");
+    const reviewList = document.getElementById("review-list");
+    const overallScore = document.getElementById("overall-score");
+    const overallPercent = document.getElementById("overall-percent");
+    const resultMessage = document.getElementById("result-message");
+    const restartBtn = document.getElementById("restart-btn");
+
+    function showScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function getLevelQuestions(levelName) {
+      return QUESTIONS.filter(item => item.level === levelName);
+    }
+
+    function globalIndexFor(levelName, localIndex) {
+      return QUESTIONS.findIndex((item, index) => item.level === levelName && getLevelQuestions(levelName).indexOf(item) === localIndex);
+    }
+
+    function renderLevelGrid() {
+      levelGrid.innerHTML = "";
+      LEVELS.forEach((level, index) => {
+        const unlocked = index === 0 || state.completedLevels.includes(LEVELS[index - 1]);
+        const complete = state.completedLevels.includes(level);
+        const card = document.createElement("div");
+        card.className = "level-card" + (unlocked ? "" : " locked");
+        const status = complete ? "Completed" : unlocked ? "Unlocked" : "Locked";
+        const copy = index === 0
+          ? "Foundation scenarios with clear reasoning choices."
+          : index === 1
+          ? "More realistic situations with context, format, and verification choices."
+          : "Nuanced judgment scenarios involving safety, evidence, and operational reliability.";
+        card.innerHTML = `
+          <h3>${level}</h3>
+          <p>${copy}</p>
+          <div class="pill-row">
+            <span class="pill">10 questions</span>
+            <span class="pill">20 minutes</span>
+            <span class="pill">${status}</span>
+          </div>
+        `;
+        levelGrid.appendChild(card);
+      });
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return String(minutes).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
+    }
+
+    function updateTimer() {
+      timerEl.textContent = formatTime(state.timeLeft);
+      timerEl.classList.toggle("danger", state.timeLeft <= 60);
+    }
+
+    function startTimer() {
+      clearInterval(state.timerId);
+      updateTimer();
+      state.timerId = setInterval(() => {
+        state.timeLeft -= 1;
+        updateTimer();
+        if (state.timeLeft <= 0) {
+          clearInterval(state.timerId);
+          finishLevel(true);
+        }
+      }, 1000);
+    }
+
+    function startLevel(index) {
+      state.levelIndex = index;
+      state.questionIndex = 0;
+      state.selected = null;
+      state.timeLeft = TIME_PER_LEVEL;
+      showScreen("quiz");
+      renderQuestion();
+      startTimer();
+    }
+
+    function currentLevel() {
+      return LEVELS[state.levelIndex];
+    }
+
+    function currentLevelQuestions() {
+      return getLevelQuestions(currentLevel());
+    }
+
+    function renderQuestion() {
+      const level = currentLevel();
+      const levelQuestions = currentLevelQuestions();
+      const item = levelQuestions[state.questionIndex];
+      const globalIndex = globalIndexFor(level, state.questionIndex);
+
+      levelLabel.textContent = level;
+      questionNumber.textContent = "Question " + (state.questionIndex + 1) + " of " + levelQuestions.length;
+      questionText.textContent = item.q;
+      progressBar.style.width = ((state.questionIndex) / levelQuestions.length * 100) + "%";
+      optionsEl.innerHTML = "";
+      state.selected = state.answers[globalIndex];
+
+      item.options.forEach((option, optionIndex) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn" + (state.selected === optionIndex ? " selected" : "");
+        btn.type = "button";
+        btn.innerHTML = `<span class="letter">${letters[optionIndex]}</span><span>${option}</span>`;
+        btn.addEventListener("click", () => selectOption(optionIndex));
+        optionsEl.appendChild(btn);
+      });
+
+      nextBtn.disabled = state.selected === null;
+      nextBtn.textContent = state.questionIndex === levelQuestions.length - 1 ? "Submit Level" : "Next Question";
+      helper.textContent = state.selected === null ? "Choose one option to continue." : "Answer selected. Continue when ready.";
+    }
+
+    function selectOption(optionIndex) {
+      const globalIndex = globalIndexFor(currentLevel(), state.questionIndex);
+      state.selected = optionIndex;
+      state.answers[globalIndex] = optionIndex;
+      nextBtn.disabled = false;
+      helper.textContent = "Answer selected. Continue when ready.";
+      [...optionsEl.children].forEach((btn, index) => {
+        btn.classList.toggle("selected", index === optionIndex);
+      });
+    }
+
+    function handleNext() {
+      if (state.selected === null) {
+        helper.textContent = "Select an answer first.";
+        return;
+      }
+      const levelQuestions = currentLevelQuestions();
+      if (state.questionIndex < levelQuestions.length - 1) {
+        state.questionIndex += 1;
+        renderQuestion();
+        return;
+      }
+      finishLevel(false);
+    }
+
+    function finishLevel(timedOut) {
+      clearInterval(state.timerId);
+      const level = currentLevel();
+      if (!state.completedLevels.includes(level)) {
+        state.completedLevels.push(level);
+      }
+      state.levelTimes[level] = TIME_PER_LEVEL - Math.max(0, state.timeLeft);
+      progressBar.style.width = "100%";
+
+      const nextLevelIndex = state.levelIndex + 1;
+      if (nextLevelIndex >= LEVELS.length) {
+        renderResults();
+        showScreen("results");
+        return;
+      }
+
+      doneEyebrow.textContent = timedOut ? "Time ended" : "Level submitted";
+      doneTitle.textContent = level + " complete";
+      doneCopy.textContent = timedOut
+        ? "The timer ended and this level has been submitted. The next level is now unlocked. Correct answers will be shown after all three levels are complete."
+        : "Your answers are saved. The next level is now unlocked. Correct answers will be shown after all three levels are complete.";
+      continueBtn.textContent = "Start " + LEVELS[nextLevelIndex] + " Level";
+      showScreen("done");
+    }
+
+    function getScoreFor(level) {
+      let correct = 0;
+      let total = 0;
+      QUESTIONS.forEach((item, index) => {
+        if (item.level === level) {
+          total += 1;
+          if (state.answers[index] === item.answer) {
+            correct += 1;
+          }
+        }
+      });
+      return { correct, total };
+    }
+
+    function renderResults() {
+      const totalCorrect = QUESTIONS.reduce((sum, item, index) => {
+        return sum + (state.answers[index] === item.answer ? 1 : 0);
+      }, 0);
+
+      const percent = Math.round((totalCorrect / QUESTIONS.length) * 100);
+      overallScore.textContent = totalCorrect + "/" + QUESTIONS.length;
+      overallPercent.textContent = percent + "%";
+
+      resultMessage.textContent = percent >= 85
+        ? "Strong performance. You showed solid judgment across context, verification, safe access, and output design."
+        : percent >= 65
+        ? "Good progress. Review the explanations below and focus on the reasoning habits behind the missed scenarios."
+        : "Keep practicing. The review below shows the reasoning pattern behind every answer.";
+
+      scoreGrid.innerHTML = "";
+      LEVELS.forEach(level => {
+        const result = getScoreFor(level);
+        const used = state.levelTimes[level] || 0;
+        const div = document.createElement("div");
+        div.className = "mini-score";
+        div.innerHTML = `
+          <strong>${result.correct}/${result.total}</strong>
+          <span>${level} · time used ${formatTime(used)}</span>
+        `;
+        scoreGrid.appendChild(div);
+      });
+
+      reviewList.innerHTML = "";
+      QUESTIONS.forEach((item, index) => {
+        const userAnswer = state.answers[index];
+        const correct = userAnswer === item.answer;
+        const detail = document.createElement("details");
+        detail.className = "result-card";
+        detail.innerHTML = `
+          <summary>
+            <span class="tag">${item.level}</span>
+            <span class="tag ${correct ? "good" : "bad"}">${correct ? "Correct" : "Incorrect"}</span>
+            <div>${index + 1}. ${item.q}</div>
+          </summary>
+          <div class="review-body">
+            <div class="answer-line"><strong>Your answer:</strong> ${userAnswer === null ? "Not answered" : letters[userAnswer] + ". " + item.options[userAnswer]}</div>
+            <div class="answer-line"><strong>Correct answer:</strong> ${letters[item.answer]}. ${item.options[item.answer]}</div>
+            <div class="answer-line"><strong>Reasoning:</strong> ${item.explanation}</div>
+          </div>
+        `;
+        reviewList.appendChild(detail);
+      });
+    }
+
+    function resetQuiz() {
+      clearInterval(state.timerId);
+      state.levelIndex = 0;
+      state.questionIndex = 0;
+      state.selected = null;
+      state.answers = Array(QUESTIONS.length).fill(null);
+      state.completedLevels = [];
+      state.levelTimes = {};
+      state.timeLeft = TIME_PER_LEVEL;
+      beginBtn.textContent = "Start Beginner Level";
+      renderLevelGrid();
+      showScreen("start");
+    }
+
+    beginBtn.addEventListener("click", () => startLevel(0));
+    nextBtn.addEventListener("click", handleNext);
+    continueBtn.addEventListener("click", () => startLevel(state.levelIndex + 1));
+    restartBtn.addEventListener("click", resetQuiz);
+
+    renderLevelGrid();
+  </script>
+</body>
+</html>
